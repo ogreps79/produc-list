@@ -98,24 +98,3 @@ button {
   cursor: pointer;
   color: #ffffff;
 }
-
-/* swipe */
-
-.product-images {
-    position: relative;
-    width: 100%; /* Adjust based on your layout */
-    height: 300px; /* Adjust based on your image sizes */
-    overflow: hidden;
-}
-
-.product-image {
-    position: absolute;
-    width: 100%;
-    height: auto; /* Maintain aspect ratio */
-    transition: opacity 0.3s ease; /* Smooth transition */
-}
-
-.product-image.hidden {
-    opacity: 0; /* Hide the image */
-}
-
