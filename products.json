@@ -1,23 +1,24 @@
 [
-    {
-        "id": 1,
-        "title": "Produkt 1",
-        "description": "Dies ist eine Beschreibung des Produkts 1.",
-        "price": 49.99,
-        "images": ["https://assetsio.gnwcdn.com/co2ekt.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp", "https://gmedia.playstation.com/is/image/SIEPDC/fortnite-keyart-01-en-30nov23?$facebook$"],
-        "tags": ["tag1", "tag2"],
-        "variants": ["Rot", "Blau"],
-        "sizes": ["S", "M", "L"]
-    },
-    {
-        "id": 2,
-        "title": "Produkt 2",
-        "description": "Dies ist eine Beschreibung des Produkts 2.",
-        "price": 89.99,
-        "images": ["https://gmedia.playstation.com/is/image/SIEPDC/fortnite-keyart-01-en-30nov23?$facebook$", "https://assetsio.gnwcdn.com/co2ekt.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp"],
-        "tags": ["tag3", "tag4"],
-        "variants": ["Schwarz", "Weiß"],
-        "sizes": ["M", "L", "XL"]
-    }
+  {
+    "id": 1,
+    "title": "Produkt 1",
+    "description": "Beschreibung des Produkts 1",
+    "price": "49.99€",
+    "images": ["https://gmedia.playstation.com/is/image/SIEPDC/fortnite-keyart-01-en-30nov23?$facebook$", "https://assetsio.gnwcdn.com/co2ekt.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp"],
+    "tags": ["Tag1", "Tag2"],
+    "variants": ["Variante1", "Variante2"],
+    "sizes": ["S", "M", "L"]
+  },
+  {
+    "id": 2,
+    "title": "Produkt 2",
+    "description": "Beschreibung des Produkts 2",
+    "price": "29.99€",
+    "images": ["https://assetsio.gnwcdn.com/co2ekt.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp", "https://gmedia.playstation.com/is/image/SIEPDC/fortnite-keyart-01-en-30nov23?$facebook$"],
+    "tags": ["Tag3", "Tag4"],
+    "variants": ["Variante1", "Variante3"],
+    "sizes": ["M", "L", "XL"]
+  }
 ]
+
 
