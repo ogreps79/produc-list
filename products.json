@@ -1,22 +1,22 @@
 [
     {
         "id": 1,
-        "title": "Produkt 1",
-        "description": "Beschreibung für Produkt 1",
-        "price": 29.99,
-        "images": ["https://artsyfartsy.de/wp-content/uploads/sites/10/2023/11/16201-1.jpg", "https://gamesucht.com/wp-content/uploads/2018/05/fortnite.jpg"],
-        "tags": ["tag1", "tag2"],
-        "variants": ["Variante 1", "Variante 2"],
-        "sizes": ["S", "M", "L"]
+        "title": "Stylish Sneakers",
+        "description": "Comfortable and stylish sneakers for everyday wear.",
+        "price": 79.99,
+        "tags": ["shoes", "sneakers", "fashion"],
+        "variants": ["Black", "White", "Red"],
+        "sizes": ["38", "39", "40", "41", "42"],
+        "images": ["https://gmedia.playstation.com/is/image/SIEPDC/fortnite-keyart-01-en-30nov23?$facebook$", "https://assetsio.gnwcdn.com/co2ekt.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp"]
     },
     {
-        "id": 1,
-        "title": "Produkt 2",
-        "description": "Beschreibung für Produkt 2",
-        "price": 29.99,
-        "images": ["https://artsyfartsy.de/wp-content/uploads/sites/10/2023/11/16201-1.jpg", "https://gamesucht.com/wp-content/uploads/2018/05/fortnite.jpg"],
-        "tags": ["tag1", "tag2"],
-        "variants": ["Variante 1", "Variante 2"],
-        "sizes": ["S", "M", "L"]
+        "id": 2,
+        "title": "Casual T-shirt",
+        "description": "Soft cotton t-shirt with a comfortable fit.",
+        "price": 19.99,
+        "tags": ["clothing", "t-shirt", "casual"],
+        "variants": ["Blue", "Grey", "Black"],
+        "sizes": ["S", "M", "L", "XL"],
+        "images": ["https://assetsio.gnwcdn.com/co2ekt.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp", "https://gmedia.playstation.com/is/image/SIEPDC/fortnite-keyart-01-en-30nov23?$facebook$"]
     }
 ]
