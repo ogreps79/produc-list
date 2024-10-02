@@ -101,35 +101,46 @@ button {
 
 /* swipe */
 
-.product-images-container {
+/* Basic styles for product images */
+  .product-images-container {
+    overflow: hidden;
     position: relative;
-    width: 100%;  /* Container adapts to the width of images */
-    overflow: hidden;  /* Hide images that are not visible */
+    width: 100%; /* Ensures that the container adjusts to different image sizes */
   }
 
   .product-images {
+    display: flex;
     position: relative;
-    height: auto;
+    transition: transform 0.4s ease-in-out; /* Smooth animation for the swipe */
+    width: 100%; /* Adjusts with each image */
   }
 
   .product-image {
+    flex-shrink: 0;
+    width: 100%;
+    height: auto;
     position: absolute;
+    left: 0;
     top: 0;
-    left: 100%; /* Start each image outside the view (to the right) */
-    width: 100%;  /* Adjust width to container */
-    opacity: 0;
-    transition: all 0.5s ease; /* Transition for smooth sliding and opacity */
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
   }
 
   .product-image.active {
-    left: 0; /* Move the active image into view */
-    opacity: 1; /* Fully visible */
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+    transform: translateX(0);
   }
 
-  .product-image.prev {
-    left: -100%; /* Move previous image out of view to the left */
+  .product-image.hidden-left, .product-image.hidden-right {
+    opacity: 0;
+    z-index: 0;
   }
 
-  .product-image.next {
-    left: 100%; /* Prepare next image for animation from the right */
+  .hidden-left {
+    transform: translateX(-100%);
+  }
+
+  .hidden-right {
+    transform: translateX(100%);
   }
