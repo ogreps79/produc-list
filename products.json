@@ -10,3 +10,13 @@
         "sizes": ["S", "M", "L"]
     },
     {
+        "id": 1,
+        "title": "Produkt 2",
+        "description": "Beschreibung für Produkt 2",
+        "price": 29.99,
+        "images": ["https://artsyfartsy.de/wp-content/uploads/sites/10/2023/11/16201-1.jpg", "https://gamesucht.com/wp-content/uploads/2018/05/fortnite.jpg"],
+        "tags": ["tag1", "tag2"],
+        "variants": ["Variante 1", "Variante 2"],
+        "sizes": ["S", "M", "L"]
+    }
+]
