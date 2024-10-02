@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produktliste</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Produktliste</h1>
+        <input type="text" id="search" placeholder="Produkte durchsuchen...">
+        <button id="showFavorites">Favoriten anzeigen</button>
+    </header>
+
+    <section id="product-list"></section>
+
+    <div id="favorites-modal" class="modal">
+        <h2>Favoriten</h2>
+        <div id="favorites-list"></div>
+        <button id="close-modal">Schließen</button>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
