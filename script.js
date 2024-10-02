@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         productImages += `<div class="product-images" data-current-index="0">`;
 
         product.images.forEach((image, index) => {
-            productImages += `<img src="${image}" alt="${product.title}" class="product-image ${index === 0 ? 'active' : 'hidden-right'}" data-index="${index}">`;
+            productImages += `<img src="${image}" alt="${product.title}" class="product-image ${index === 0 ? 'active' : 'hidden-right'}" data-index="${index}" style="width: auto; height: 100%;">`;
         });
         productImages += '</div></div>';  // End of product-images
 
@@ -102,14 +102,16 @@ function swipeImage(images, currentIndex, newIndex, direction) {
     currentImage.classList.remove('active');
     currentImage.classList.add(direction === 'left' ? 'hidden-left' : 'hidden-right');
 
+    // Set the next image to be visible
     nextImage.classList.remove('hidden-left', 'hidden-right');
     nextImage.classList.add('active');
 
-    // Set timeout to remove the class after animation completes
+    // Set timeout to reset classes after animation completes
     setTimeout(() => {
         currentImage.classList.remove('hidden-left', 'hidden-right');
     }, 400); // Match the CSS transition duration
 }
+
   // Attach favorite buttons
   function attachFavoriteListeners() {
     const favoriteButtons = document.querySelectorAll('.favorite-button');
