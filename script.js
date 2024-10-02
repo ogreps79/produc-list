@@ -38,9 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         productImages += `<div class="product-images" data-current-index="0">`;
 
         product.images.forEach((image, index) => {
-            productImages += `
-              <img src="${image}" alt="${product.title}" class="product-image ${index === 0 ? 'active' : ''}" data-index="${index}">
-            `;
+            productImages += `<img src="${image}" alt="${product.title}" class="product-image ${index === 0 ? 'active' : 'hidden-right'}" data-index="${index}">`;
         });
         productImages += '</div></div>';  // End of product-images
 
@@ -83,11 +81,11 @@ function addSwipeFunctionality(imageContainer) {
             if (deltaX > 0) {
                 // Swiped left, show next image
                 newIndex = (currentIndex + 1) % imageCount;
-                animateSwipe(images, currentIndex, newIndex, 'left');
+                swipeImage(images, currentIndex, newIndex, 'left');
             } else {
                 // Swiped right, show previous image
                 newIndex = (currentIndex - 1 + imageCount) % imageCount;
-                animateSwipe(images, currentIndex, newIndex, 'right');
+                swipeImage(images, currentIndex, newIndex, 'right');
             }
 
             imageContainer.setAttribute('data-current-index', newIndex);
@@ -95,33 +93,23 @@ function addSwipeFunctionality(imageContainer) {
     });
 }
 
-// Function to animate swipe between images
-function animateSwipe(images, currentIndex, newIndex, direction) {
+// Function to handle the swipe and animate between images
+function swipeImage(images, currentIndex, newIndex, direction) {
     const currentImage = images[currentIndex];
     const nextImage = images[newIndex];
 
-    // Reset classes
-    images.forEach(img => img.classList.remove('prev', 'next', 'active'));
+    // Prepare for the animation
+    currentImage.classList.remove('active');
+    currentImage.classList.add(direction === 'left' ? 'hidden-left' : 'hidden-right');
 
-    if (direction === 'left') {
-        // Animate current image out to the left and next image in from the right
-        currentImage.classList.add('prev');
-        nextImage.classList.add('next');
-    } else {
-        // Animate current image out to the right and next image in from the left
-        currentImage.classList.add('next');
-        nextImage.classList.add('prev');
-    }
+    nextImage.classList.remove('hidden-left', 'hidden-right');
+    nextImage.classList.add('active');
 
-    // Trigger the animation after a short delay (next repaint)
-    requestAnimationFrame(() => {
-        currentImage.classList.remove('active');
-        nextImage.classList.add('active');
-    });
+    // Set timeout to remove the class after animation completes
+    setTimeout(() => {
+        currentImage.classList.remove('hidden-left', 'hidden-right');
+    }, 400); // Match the CSS transition duration
 }
-
-
-
   // Attach favorite buttons
   function attachFavoriteListeners() {
     const favoriteButtons = document.querySelectorAll('.favorite-button');
