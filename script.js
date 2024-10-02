@@ -33,12 +33,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const productDiv = document.createElement('div');
         productDiv.classList.add('product');
 
-        // Create the wrapper for the swipable images
         let productImages = '<div class="product-images-container">';
         productImages += `<div class="product-images" data-current-index="0">`;
 
         product.images.forEach((image, index) => {
-            productImages += `<img src="${image}" alt="${product.title}" class="product-image ${index === 0 ? 'active' : 'hidden-right'}" data-index="${index}" style="width: auto; height: 100%;">`;
+            productImages += `<img src="${image}" alt="${product.title}" class="product-image" data-index="${index}" style="opacity: ${index === 0 ? 1 : 0};">`;
         });
         productImages += '</div></div>';  // End of product-images
 
@@ -59,58 +58,75 @@ document.addEventListener("DOMContentLoaded", function () {
     attachFavoriteListeners();
 }
 
-// Function to handle swiping left and right on product images with animation
+// Function to handle swiping left and right on product images
 function addSwipeFunctionality(imageContainer) {
     let startX = 0;
     const images = imageContainer.querySelectorAll('.product-image');
     const imageCount = images.length;
+    const threshold = 50; // Minimum swipe distance to trigger image change
 
     imageContainer.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
+    });
+
+    imageContainer.addEventListener('touchmove', (e) => {
+        const endX = e.touches[0].clientX;
+        const deltaX = startX - endX;
+
+        const currentIndex = parseInt(imageContainer.getAttribute('data-current-index'));
+        const nextIndex = (deltaX > 0) 
+            ? (currentIndex + 1) % imageCount
+            : (currentIndex - 1 + imageCount) % imageCount;
+
+        // Fade out current image and fade in next image
+        const currentImage = images[currentIndex];
+        const nextImage = images[nextIndex];
+
+        // Adjust opacity based on swipe distance
+        const swipeDistance = Math.abs(deltaX);
+        const maxSwipeDistance = 300; // Maximum swipe distance for complete opacity transition
+        const opacity = 1 - Math.min(swipeDistance / maxSwipeDistance, 1);
+
+        currentImage.style.opacity = opacity; // Fade out the current image
+        nextImage.style.opacity = 1 - opacity; // Fade in the next image
+
+        // Show next image at the end of the transition
+        nextImage.style.display = 'block'; // Ensure next image is visible during swipe
     });
 
     imageContainer.addEventListener('touchend', (e) => {
         const endX = e.changedTouches[0].clientX;
         const deltaX = startX - endX;
 
-        // Threshold to detect swipe
-        if (Math.abs(deltaX) > 50) {
-            const currentIndex = parseInt(imageContainer.getAttribute('data-current-index'));
-            let newIndex = currentIndex;
+        const currentIndex = parseInt(imageContainer.getAttribute('data-current-index'));
+        let newIndex = currentIndex;
 
+        // Check if the swipe was significant enough
+        if (Math.abs(deltaX) > threshold) {
             if (deltaX > 0) {
-                // Swiped left, show next image
+                // Swiped left
                 newIndex = (currentIndex + 1) % imageCount;
-                swipeImage(images, currentIndex, newIndex, 'left');
             } else {
-                // Swiped right, show previous image
+                // Swiped right
                 newIndex = (currentIndex - 1 + imageCount) % imageCount;
-                swipeImage(images, currentIndex, newIndex, 'right');
             }
-
-            imageContainer.setAttribute('data-current-index', newIndex);
         }
+
+        // Reset the opacity of images
+        images[currentIndex].style.opacity = '0'; // Fade out current
+        images[newIndex].style.opacity = '1'; // Fade in next
+
+        // Update the current index attribute
+        imageContainer.setAttribute('data-current-index', newIndex);
+        
+        // Hide the current image completely after transition
+        setTimeout(() => {
+            images[currentIndex].style.display = 'none';
+            images[newIndex].style.display = 'block'; // Ensure the next image is displayed
+        }, 300); // Match this timeout with the CSS transition duration
     });
 }
 
-// Function to handle the swipe and animate between images
-function swipeImage(images, currentIndex, newIndex, direction) {
-    const currentImage = images[currentIndex];
-    const nextImage = images[newIndex];
-
-    // Prepare for the animation
-    currentImage.classList.remove('active');
-    currentImage.classList.add(direction === 'left' ? 'hidden-left' : 'hidden-right');
-
-    // Set the next image to be visible
-    nextImage.classList.remove('hidden-left', 'hidden-right');
-    nextImage.classList.add('active');
-
-    // Set timeout to reset classes after animation completes
-    setTimeout(() => {
-        currentImage.classList.remove('hidden-left', 'hidden-right');
-    }, 400); // Match the CSS transition duration
-}
 
   // Attach favorite buttons
   function attachFavoriteListeners() {
