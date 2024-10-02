@@ -98,3 +98,38 @@ button {
   cursor: pointer;
   color: #ffffff;
 }
+
+/* swipe */
+
+.product-images-container {
+    position: relative;
+    width: 100%;  /* Container adapts to the width of images */
+    overflow: hidden;  /* Hide images that are not visible */
+  }
+
+  .product-images {
+    position: relative;
+    height: auto;
+  }
+
+  .product-image {
+    position: absolute;
+    top: 0;
+    left: 100%; /* Start each image outside the view (to the right) */
+    width: 100%;  /* Adjust width to container */
+    opacity: 0;
+    transition: all 0.5s ease; /* Transition for smooth sliding and opacity */
+  }
+
+  .product-image.active {
+    left: 0; /* Move the active image into view */
+    opacity: 1; /* Fully visible */
+  }
+
+  .product-image.prev {
+    left: -100%; /* Move previous image out of view to the left */
+  }
+
+  .product-image.next {
+    left: 100%; /* Prepare next image for animation from the right */
+  }
