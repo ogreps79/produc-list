@@ -1,39 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Produktliste</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <header>
-        <h1>Product List</h1>
-        <button id="favorites-btn">Show Favorites</button>
+        <h1 id="title">Produktliste</h1>
+        <div id="favorites-tab">Favoriten</div>
+        <input type="text" id="search-bar" placeholder="Suche nach Produkten...">
+        <p id="product-count"></p>
     </header>
+    <section id="product-list"></section>
+    <section id="favorites-list" class="hidden"></section>
 
-    <input type="text" id="search" placeholder="Search products...">
-
-    <!-- Anzeige der Anzahl der sichtbaren Produkte/Favoriten -->
-    <p id="product-count"></p>
-
-    <main id="product-list"></main>
-
-    <!-- Modal für Favorisieren -->
-    <div id="favorite-modal" class="modal">
+    <div id="variant-modal" class="modal hidden">
         <div class="modal-content">
             <span id="close-modal">&times;</span>
-            <h2>Choose Variant and Size</h2>
-            <label for="variants">Variants:</label>
-            <select id="variants"></select>
-
-            <label for="sizes">Sizes:</label>
-            <select id="sizes"></select>
-
-            <button id="save-favorite">Save to Favorites</button>
+            <h2>Wähle Variante und Größe</h2>
+            <div id="variant-options"></div>
+            <div id="size-options"></div>
+            <button id="save-favorite">Speichern</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
