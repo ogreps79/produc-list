@@ -101,46 +101,42 @@ button {
 
 /* swipe */
 
-/* Basic styles for product images */
-  .product-images-container {
+.product-images-container {
     overflow: hidden;
     position: relative;
-    width: 100%; /* Ensures that the container adjusts to different image sizes */
-  }
+    width: 100%; /* Ensures that the container fills the available width */
+    height: auto; /* Allows height to adjust dynamically */
+}
 
-  .product-images {
+.product-images {
     display: flex;
-    position: relative;
     transition: transform 0.4s ease-in-out; /* Smooth animation for the swipe */
-    width: 100%; /* Adjusts with each image */
-  }
+}
 
-  .product-image {
+.product-image {
     flex-shrink: 0;
-    width: 100%;
-    height: auto;
+    width: auto; /* Allow width to auto adjust based on the image size */
+    height: 100%; /* Set height to 100% of the container */
     position: absolute;
     left: 0;
     top: 0;
     transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-  }
+    object-fit: contain; /* Maintains aspect ratio without cropping */
+}
 
-  .product-image.active {
+.product-image.active {
     position: relative;
     z-index: 1;
     opacity: 1;
     transform: translateX(0);
-  }
+}
 
-  .product-image.hidden-left, .product-image.hidden-right {
-    opacity: 0;
-    z-index: 0;
-  }
-
-  .hidden-left {
+.hidden-left {
     transform: translateX(-100%);
-  }
+    opacity: 0; /* Fade out */
+}
 
-  .hidden-right {
+.hidden-right {
     transform: translateX(100%);
-  }
+    opacity: 0; /* Fade out */
+}
