@@ -38,7 +38,9 @@ document.addEventListener("DOMContentLoaded", function () {
         productImages += `<div class="product-images" data-current-index="0">`;
 
         product.images.forEach((image, index) => {
-            productImages += `<img src="${image}" alt="${product.title}" class="product-image" data-index="${index}" style="display: ${index === 0 ? 'block' : 'none'};">`;
+            productImages += `
+              <img src="${image}" alt="${product.title}" class="product-image ${index === 0 ? 'active' : ''}" data-index="${index}">
+            `;
         });
         productImages += '</div></div>';  // End of product-images
 
@@ -59,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     attachFavoriteListeners();
 }
 
-// Function to handle swiping left and right on product images
+// Function to handle swiping left and right on product images with animation
 function addSwipeFunctionality(imageContainer) {
     let startX = 0;
     const images = imageContainer.querySelectorAll('.product-image');
@@ -81,16 +83,40 @@ function addSwipeFunctionality(imageContainer) {
             if (deltaX > 0) {
                 // Swiped left, show next image
                 newIndex = (currentIndex + 1) % imageCount;
+                animateSwipe(images, currentIndex, newIndex, 'left');
             } else {
                 // Swiped right, show previous image
                 newIndex = (currentIndex - 1 + imageCount) % imageCount;
+                animateSwipe(images, currentIndex, newIndex, 'right');
             }
 
-            // Update current image visibility
-            images[currentIndex].style.display = 'none';
-            images[newIndex].style.display = 'block';
             imageContainer.setAttribute('data-current-index', newIndex);
         }
+    });
+}
+
+// Function to animate swipe between images
+function animateSwipe(images, currentIndex, newIndex, direction) {
+    const currentImage = images[currentIndex];
+    const nextImage = images[newIndex];
+
+    // Reset classes
+    images.forEach(img => img.classList.remove('prev', 'next', 'active'));
+
+    if (direction === 'left') {
+        // Animate current image out to the left and next image in from the right
+        currentImage.classList.add('prev');
+        nextImage.classList.add('next');
+    } else {
+        // Animate current image out to the right and next image in from the left
+        currentImage.classList.add('next');
+        nextImage.classList.add('prev');
+    }
+
+    // Trigger the animation after a short delay (next repaint)
+    requestAnimationFrame(() => {
+        currentImage.classList.remove('active');
+        nextImage.classList.add('active');
     });
 }
 
