@@ -4,28 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produktliste</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1 id="title">Produktliste</h1>
-        <div id="favorites-tab">Favoriten</div>
-        <input type="text" id="search-bar" placeholder="Suche nach Produkten...">
-        <p id="product-count"></p>
-    </header>
-    <section id="product-list"></section>
-    <section id="favorites-list" class="hidden"></section>
+    <div class="container">
+        <header>
+            <h1 onclick="toggleFavorites(false)">Produkte</h1>
+            <button id="favorites-tab" onclick="toggleFavorites(true)">Favoriten</button>
+            <div id="search-container">
+                <input type="text" id="search" placeholder="Produkte durchsuchen..." oninput="searchProducts()">
+            </div>
+            <div id="product-count">Anzahl der Produkte: <span id="product-count-value"></span></div>
+        </header>
 
-    <div id="variant-modal" class="modal hidden">
-        <div class="modal-content">
-            <span id="close-modal">&times;</span>
-            <h2>Wähle Variante und Größe</h2>
-            <div id="variant-options"></div>
-            <div id="size-options"></div>
-            <button id="save-favorite">Speichern</button>
+        <main id="product-list"></main>
+
+        <!-- Modal für Favoritenauswahl -->
+        <div id="variant-size-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Variante und Größe wählen</h2>
+                <div id="variant-selection"></div>
+                <div id="size-selection"></div>
+                <button onclick="confirmSelection()">Bestätigen</button>
+            </div>
         </div>
     </div>
 
-    <script src="js/main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
