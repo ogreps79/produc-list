@@ -1,89 +1,81 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let productList = document.getElementById('product-list');
-    let favoritesList = document.getElementById('favorites-list');
-    let favoritesModal = document.getElementById('favorites-modal');
-    let closeModal = document.getElementById('close-modal');
-
+    let products = [];
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-    // Lade Produkte aus der JSON-Datei
+    const productList = document.getElementById('product-list');
+    const searchInput = document.getElementById('search');
+    const modal = document.getElementById('favorite-modal');
+    const closeModal = document.getElementById('close-modal');
+    const saveFavoriteBtn = document.getElementById('save-favorite');
+    let currentProduct = null;
+
+    // Produkte laden
     fetch('products.json')
         .then(response => response.json())
-        .then(products => {
+        .then(data => {
+            products = data;
             displayProducts(products);
-            document.getElementById('search').addEventListener('input', (event) => {
-                let query = event.target.value.toLowerCase();
-                let filteredProducts = products.filter(product => product.title.toLowerCase().includes(query));
-                displayProducts(filteredProducts);
-            });
         });
 
-    function displayProducts(products) {
+    // Produkte anzeigen
+    function displayProducts(productArray) {
         productList.innerHTML = '';
-        products.forEach(product => {
-            let productItem = document.createElement('div');
-            productItem.classList.add('product-item');
-            productItem.innerHTML = `
+        productArray.forEach(product => {
+            const productElement = document.createElement('div');
+            productElement.classList.add('product');
+            productElement.innerHTML = `
                 <img src="${product.images[0]}" alt="${product.title}">
                 <h3>${product.title}</h3>
                 <p>${product.description}</p>
-                <p>Preis: ${product.price} €</p>
-                <button class="favorite-btn" data-id="${product.id}">Favorisieren</button>
+                <p>Price: $${product.price}</p>
+                <button class="favorite-btn" data-id="${product.id}">Favorize</button>
             `;
-            productList.appendChild(productItem);
+            productList.appendChild(productElement);
         });
 
+        // Favorisieren Buttons
         document.querySelectorAll('.favorite-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                let productId = event.target.getAttribute('data-id');
-                let product = products.find(p => p.id == productId);
-                openFavoriteModal(product);
+            button.addEventListener('click', (e) => {
+                currentProduct = products.find(p => p.id == e.target.dataset.id);
+                showModal();
             });
         });
     }
 
-    function openFavoriteModal(product) {
-        let modalContent = `
-            <h3>${product.title}</h3>
-            <p>Wähle Variante und Größe:</p>
-            <select id="variant-select">
-                ${product.variants.map(variant => `<option value="${variant}">${variant}</option>`).join('')}
-            </select>
-            <select id="size-select">
-                ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
-            </select>
-            <button id="save-favorite">Speichern</button>
-        `;
-        favoritesList.innerHTML = modalContent;
-        favoritesModal.classList.add('active');
-
-        document.getElementById('save-favorite').addEventListener('click', () => {
-            let selectedVariant = document.getElementById('variant-select').value;
-            let selectedSize = document.getElementById('size-select').value;
-
-            favorites.push({
-                id: product.id,
-                title: product.title,
-                variant: selectedVariant,
-                size: selectedSize
-            });
-
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            favoritesModal.classList.remove('active');
-        });
-    }
-
-    closeModal.addEventListener('click', () => {
-        favoritesModal.classList.remove('active');
+    // Suche
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        const filteredProducts = products.filter(product => 
+            product.title.toLowerCase().includes(query) ||
+            product.description.toLowerCase().includes(query)
+        );
+        displayProducts(filteredProducts);
     });
 
-    document.getElementById('showFavorites').addEventListener('click', () => {
-        favoritesList.innerHTML = favorites.map(fav => `
-            <div>
-                <h3>${fav.title}</h3>
-                <p>Variante: ${fav.variant}, Größe: ${fav.size}</p>
-            </div>
-        `).join('');
-        favoritesModal.classList.add('active');
+    // Modal anzeigen
+    function showModal() {
+        document.getElementById('variants').innerHTML = currentProduct.variants.map(v => `<option>${v}</option>`).join('');
+        document.getElementById('sizes').innerHTML = currentProduct.sizes.map(s => `<option>${s}</option>`).join('');
+        modal.style.display = 'flex';
+    }
+
+    // Modal schließen
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Favorit speichern
+    saveFavoriteBtn.addEventListener('click', () => {
+        const selectedVariant = document.getElementById('variants').value;
+        const selectedSize = document.getElementById('sizes').value;
+        const favorite = { ...currentProduct, selectedVariant, selectedSize };
+        favorites.push(favorite);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        modal.style.display = 'none';
+    });
+
+    // Favoriten anzeigen
+    document.getElementById('favorites-btn').addEventListener('click', () => {
+        displayProducts(favorites);
     });
 });
