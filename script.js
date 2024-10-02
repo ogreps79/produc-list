@@ -30,28 +30,70 @@ document.addEventListener("DOMContentLoaded", function () {
     productCount.textContent = `${products.length} Produkte gefunden`;
 
     products.forEach(product => {
-      const productDiv = document.createElement('div');
-      productDiv.classList.add('product');
+        const productDiv = document.createElement('div');
+        productDiv.classList.add('product');
 
-      let productImages = '<div class="product-images">';
-      product.images.forEach(image => {
-        productImages += `<img src="${image}" alt="${product.title}">`;
-      });
-      productImages += '</div>';
+        // Create the wrapper for the swipable images
+        let productImages = '<div class="product-images-container">';
+        productImages += `<div class="product-images" data-current-index="0">`;
 
-      productDiv.innerHTML = `
-        ${productImages}
-        <h3>${product.title}</h3>
-        <p class="price">€${product.price}</p>
-        <p>${product.description}</p>
-        <button class="favorite-button" data-id="${product.id}">Favorisieren</button>
-      `;
+        product.images.forEach((image, index) => {
+            productImages += `<img src="${image}" alt="${product.title}" class="product-image" data-index="${index}" style="display: ${index === 0 ? 'block' : 'none'};">`;
+        });
+        productImages += '</div></div>';  // End of product-images
 
-      productList.appendChild(productDiv);
+        productDiv.innerHTML = `
+            ${productImages}
+            <h3>${product.title}</h3>
+            <p class="price">€${product.price}</p>
+            <p>${product.description}</p>
+            <button class="favorite-button" data-id="${product.id}">Favorisieren</button>
+        `;
+
+        productList.appendChild(productDiv);
+
+        // Add swipe functionality to product images
+        addSwipeFunctionality(productDiv.querySelector('.product-images'));
     });
 
     attachFavoriteListeners();
-  }
+}
+
+// Function to handle swiping left and right on product images
+function addSwipeFunctionality(imageContainer) {
+    let startX = 0;
+    const images = imageContainer.querySelectorAll('.product-image');
+    const imageCount = images.length;
+
+    imageContainer.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+    });
+
+    imageContainer.addEventListener('touchend', (e) => {
+        const endX = e.changedTouches[0].clientX;
+        const deltaX = startX - endX;
+
+        // Threshold to detect swipe
+        if (Math.abs(deltaX) > 50) {
+            const currentIndex = parseInt(imageContainer.getAttribute('data-current-index'));
+            let newIndex = currentIndex;
+
+            if (deltaX > 0) {
+                // Swiped left, show next image
+                newIndex = (currentIndex + 1) % imageCount;
+            } else {
+                // Swiped right, show previous image
+                newIndex = (currentIndex - 1 + imageCount) % imageCount;
+            }
+
+            // Update current image visibility
+            images[currentIndex].style.display = 'none';
+            images[newIndex].style.display = 'block';
+            imageContainer.setAttribute('data-current-index', newIndex);
+        }
+    });
+}
+
 
   // Attach favorite buttons
   function attachFavoriteListeners() {
