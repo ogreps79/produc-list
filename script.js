@@ -150,6 +150,7 @@ function addSwipeFunctionality(imageContainer) {
     renderFavorites();
   };
 
+  // render favourites
   function renderFavorites() {
     const productList = document.getElementById('product-list');
     const productCount = document.getElementById('product-count');
