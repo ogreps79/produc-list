@@ -52,19 +52,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
         productList.appendChild(productDiv);
 
-        // Add swipe functionality to product images
+        // Add swipe functionality for both desktop and mobile
         addSwipeFunctionality(productDiv.querySelector('.product-images'));
     });
 
     attachFavoriteListeners();
 }
 
-// Function to handle swiping left and right on product images
+// Function to handle swiping left and right on product images for both touch and mouse events
 function addSwipeFunctionality(imageContainer) {
     let startX = 0;
+    let isDragging = false;
     const images = imageContainer.querySelectorAll('.product-image');
     const imageCount = images.length;
 
+    // Common function to handle the swipe logic
+    function handleSwipe(deltaX) {
+        const currentIndex = parseInt(imageContainer.getAttribute('data-current-index'));
+        let newIndex = currentIndex;
+
+        if (deltaX > 50) {
+            // Swiped left, show next image
+            newIndex = (currentIndex + 1) % imageCount;
+        } else if (deltaX < -50) {
+            // Swiped right, show previous image
+            newIndex = (currentIndex - 1 + imageCount) % imageCount;
+        }
+
+        // Update current image visibility
+        if (newIndex !== currentIndex) {
+            images[currentIndex].style.display = 'none';
+            images[newIndex].style.display = 'block';
+            imageContainer.setAttribute('data-current-index', newIndex);
+        }
+    }
+
+    // Touch events (mobile)
     imageContainer.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
     });
@@ -72,27 +95,38 @@ function addSwipeFunctionality(imageContainer) {
     imageContainer.addEventListener('touchend', (e) => {
         const endX = e.changedTouches[0].clientX;
         const deltaX = startX - endX;
+        handleSwipe(deltaX);
+    });
 
-        // Threshold to detect swipe
-        if (Math.abs(deltaX) > 50) {
-            const currentIndex = parseInt(imageContainer.getAttribute('data-current-index'));
-            let newIndex = currentIndex;
+    // Mouse events (desktop)
+    imageContainer.addEventListener('mousedown', (e) => {
+        startX = e.clientX;
+        isDragging = true;
+    });
 
-            if (deltaX > 0) {
-                // Swiped left, show next image
-                newIndex = (currentIndex + 1) % imageCount;
-            } else {
-                // Swiped right, show previous image
-                newIndex = (currentIndex - 1 + imageCount) % imageCount;
-            }
+    imageContainer.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            e.preventDefault();  // Prevent default behavior during dragging
+        }
+    });
 
-            // Update current image visibility
-            images[currentIndex].style.display = 'none';
-            images[newIndex].style.display = 'block';
-            imageContainer.setAttribute('data-current-index', newIndex);
+    imageContainer.addEventListener('mouseup', (e) => {
+        if (isDragging) {
+            const endX = e.clientX;
+            const deltaX = startX - endX;
+            handleSwipe(deltaX);
+            isDragging = false;
+        }
+    });
+
+    // For completeness, handle mouseout to ensure dragging stops when the user moves the mouse outside the container
+    imageContainer.addEventListener('mouseleave', () => {
+        if (isDragging) {
+            isDragging = false;
         }
     });
 }
+
 
 
   // Attach favorite buttons
