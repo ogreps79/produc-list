@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produktliste</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ogreps79 Shop</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1 onclick="toggleFavorites(false)">Produkte</h1>
-            <button id="favorites-tab" onclick="toggleFavorites(true)">Favoriten</button>
-            <div id="search-container">
-                <input type="text" id="search" placeholder="Produkte durchsuchen..." oninput="searchProducts()">
-            </div>
-            <div id="product-count">Anzahl der Produkte: <span id="product-count-value"></span></div>
-        </header>
-
-        <main id="product-list"></main>
-
-        <!-- Modal für Favoritenauswahl -->
-        <div id="variant-size-modal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h2>Variante und Größe wählen</h2>
-                <div id="variant-selection"></div>
-                <div id="size-selection"></div>
-                <button onclick="confirmSelection()">Bestätigen</button>
-            </div>
-        </div>
+  <header>
+    <h1>ogreps79</h1>
+    <div class="nav">
+      <span id="view-products" class="nav-link">Produkte</span>
+      <span id="view-favorites" class="nav-link">Favoriten</span>
     </div>
+    <input type="text" id="search" placeholder="Produkte durchsuchen...">
+    <p id="product-count"></p>
+  </header>
 
-    <script src="script.js"></script>
+  <main id="product-list"></main>
+
+  <div id="variant-size-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Variante und Größe wählen</h2>
+      <div id="variant-selection"></div>
+      <div id="size-selection"></div>
+      <button id="save-favorite">Speichern</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
