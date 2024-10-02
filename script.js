@@ -157,24 +157,30 @@ function addSwipeFunctionality(imageContainer) {
     productCount.textContent = `${favorites.length} Favoriten`;
 
     favorites.forEach(favorite => {
-      const productDiv = document.createElement('div');
-      productDiv.classList.add('product');
+        const productDiv = document.createElement('div');
+        productDiv.classList.add('product');
 
-      let productImages = '<div class="product-images">';
-      favorite.images.forEach(image => {
-        productImages += `<img src="${image}" alt="${favorite.title}">`;
-      });
-      productImages += '</div>';
+        // Create the wrapper for the swipable images
+        let productImages = '<div class="product-images-container">';
+        productImages += `<div class="product-images" data-current-index="0">`;
 
-      productDiv.innerHTML = `
-        ${productImages}
-        <h3>${favorite.title}</h3>
-        <p class="price">€${favorite.price}</p>
-        <p>Variante: ${favorite.selectedVariant}</p>
-        <p>Größe: ${favorite.selectedSize}</p>
-      `;
+        favorite.images.forEach((image, index) => {
+            productImages += `<img src="${image}" alt="${favorite.title}" class="product-image" data-index="${index}" style="display: ${index === 0 ? 'block' : 'none'};">`;
+        });
+        productImages += '</div></div>';  // End of product-images
 
-      productList.appendChild(productDiv);
+        productDiv.innerHTML = `
+            ${productImages}
+            <h3>${favorite.title}</h3>
+            <p class="price">€${favorite.price}</p>
+            <p>Variante: ${favorite.selectedVariant}</p>
+            <p>Größe: ${favorite.selectedSize}</p>
+        `;
+
+        productList.appendChild(productDiv);
+
+        // Add swipe functionality to product images
+        addSwipeFunctionality(productDiv.querySelector('.product-images'));
     });
-  }
+}
 });
