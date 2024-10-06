@@ -1,34 +1,49 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ogreps79 Shop</title>
-  <link rel="stylesheet" href="style.css?v=0.1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ogreps79</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>ogreps79</h1>
-    <div class="nav">
-      <span id="view-products" class="nav-link">Produkte</span>
-      <span id="view-favorites" class="nav-link">Favoriten</span>
+
+    <header>
+        <h1>ogreps79</h1>
+        <div class="menu">
+            <a href="#" id="show-products">Produkte</a>
+            <a href="#" id="show-favorites">Gespeichert</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Suche nach Produkten...">
+            <p id="article-count">Gefundene Artikel:</p>
+        </div>
+
+        <div id="product-list"></div>
+        <div id="favorite-list" style="display:none;"></div>
+    </main>
+
+    <!-- Modal für Variante und Größe Auswahl -->
+    <div id="variant-size-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <div id="onesize-info" style="display: block;"></div>
+            <div id="variant-selection" style="display: none;">
+                <h3>Ausführung wählen:</h3>
+                <div id="variant-images" class="variant-swiper"></div>
+            </div>
+            <div id="size-selection" style="display: none;">
+                <h3>Größe wählen:</h3>
+                <select id="sizeSelect"></select>
+            </div>
+            <button id="save-button" class="button" style="display: none;" onclick="saveFavorite()">Speichern</button>
+        </div>
     </div>
-    <input type="text" id="search" placeholder="Produkte durchsuchen...">
-    <p id="product-count"></p>
-  </header>
 
-  <main id="product-list"></main>
+    <script src="script.js"></script>
 
-  <div id="variant-size-modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Variante und Größe wählen</h2>
-      <div id="variant-selection"></div>
-      <div id="size-selection"></div>
-      <button id="save-favorite">Speichern</button>
-    </div>
-  </div>
-
-  <script src="script.js?v=0.1.1"></script>
 </body>
 </html>

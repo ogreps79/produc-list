@@ -1,7 +1,8 @@
+/* style.css */
 body {
-  background-color: #1e1e1e;
-  color: #ffffff;
   font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
   margin: 0;
   padding: 0;
 }
@@ -9,92 +10,201 @@ body {
 header {
   text-align: center;
   padding: 20px;
-  background-color: #2a2a2a;
 }
 
-h1 {
-  margin: 0;
-  color: #ffffff;
+.menu a {
+  margin: 0 10px;
+  color: #64ffda;
+  text-decoration: none;
 }
 
-.nav {
-  margin: 10px 0;
+.menu a:hover {
+  text-decoration: underline;
 }
 
-.nav-link {
-  color: #00aaff;
-  cursor: pointer;
-  margin-right: 10px;
+.search-container {
+  text-align: center;
+  margin: 20px;
 }
 
-#search {
-  width: calc(100% - 40px);
+input[type="text"] {
   padding: 10px;
-  margin: 10px 0;
-  background-color: #333333;
+  width: 80%;
   border: none;
-  color: #ffffff;
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
-#product-list {
+#product-list, #favorite-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  transition: opacity 0.2s ease-in-out;
 }
 
-.product {
-  background-color: #2a2a2a;
-  border-radius: 10px;
-  padding: 10px;
+.product, .favorite-product {
+  position: relative;
+  background-color: #1e1e1e;
+  border-radius: 8px;
   margin: 10px;
-  width: calc(100% - 40px);
+  padding: 15px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.product img {
+.price-text {
+  font-size: 0.8em;
+  color: #666;
+  margin: 0;
+}
+
+.product h3, .favorite-product h3 {
+  margin: 0;
+}
+
+.product img, .favorite-product img {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
-.product h3 {
-  margin: 10px 0 5px;
-}
-
-.price {
-  font-size: 1.2em;
-  color: #00ff77;
-}
-
-button {
-  background-color: #00aaff;
-  color: #ffffff;
+.button {
+  margin-top: 10px;
+  background-color: #64ffda;
+  color: #121212;
   border: none;
   padding: 10px;
-  border-radius: 5px;
   cursor: pointer;
+  border-radius: 4px;
 }
 
-.modal {
-  display: none;
-  position: fixed;
+.button:hover {
+  background-color: #52e0c4;
+}
+
+/* favorite remove button */
+
+.remove-favorite {
+  position: absolute;
+  top: -26px;
+  right: -5px;
+  background: transparent;
+  border: none;
+  color: #72727265;
+  font-size: 30px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.remove-favorite:hover {
+  color: #52e0c483;
+}
+
+/* product image swiper */
+
+.swiper {
+  overflow: hidden;  /* Prevent images from showing at the borders */
+  width: 100%;
+  border-radius: 8px;
+  position: relative;
+}
+
+.swipe-container {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  width: 100%;  /* Ensure container takes full width */
+}
+
+.aspect-ratio-box {
+  width: 100%;
+  padding-top: 100%;  /* This sets a 16:9 aspect ratio (9/16 = 0.5625 or 56.25%) */
+  position: relative;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.swipe-image {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  justify-content: center;
-  align-items: center;
+  object-fit: contain;  /* Ensures image fills the aspect-ratio box */
+}
+
+/* favorize modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
 }
 
 .modal-content {
-  background-color: #2a2a2a;
+  background-color: #1e1e1e;
+  margin: 15% auto;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 8px;
   width: 80%;
+  max-width: 400px;
+  text-align: center;
+  color: #e0e0e0;
 }
 
-.close {
+.close-button {
+  color: #aaa;
   float: right;
+  font-size: 28px;
+  font-weight: bold;
   cursor: pointer;
-  color: #ffffff;
+}
+
+.variant-swiper {
+  display: flex;
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+.variant-swiper img {
+  width: 40%;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 8px;
+}
+
+.variant-swiper img.selected {
+  border-color: #64ffda;
+}
+
+button {
+  margin-top: 20px;
+}
+
+select {
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.onesize-image {
+  border-radius: 8px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.copy-all-container {
+  margin-top: 20px; /* Space above the copy all button */
+  text-align: center; /* Center the button */
+  clear: both; /* Ensures the button stays below floated or inline elements */
+  width: 100%; /* Ensures the container takes the full width */
+}
+
+.copy-all-container .button {
+  display: inline-block; /* Keep the button inline but allows for margin */
+  padding: 10px 20px; /* Adjust padding as needed */
+  margin: 0 10px; /* Space around the button */
 }
