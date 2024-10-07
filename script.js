@@ -6,7 +6,7 @@ let selectedVariant = null;
 let selectedSize = null;
 
 // Fetch products from JSON file
-fetch('products.json')
+fetch('productsV2.json')
     .then(response => response.json())
     .then(data => {
         products = data.articles;
